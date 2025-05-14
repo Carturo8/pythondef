@@ -144,25 +144,115 @@ def add_course(course_title:str = "", hours:int = 0, enrollments:int = 0) -> Non
         courses[course_title] = {"Hours": hours, "Enrollments": enrollments}
         print(f"The course '{course_title}' with ({hours}) hours and ({enrollments}) enrollments was successfully added.")
 
-# def update_enrollment(): pass
-# def filter_by_hours(): pass
-#
-# # 7. To-Do List Organizer
-# def add_task(): pass
-# def complete_task(): pass
-# def filter_tasks(): pass
-#
-# # 8. Digital Wallet
-# def add_expense(): pass
-# def total_spent(): pass
-# def expense_percentages(): pass
-#
-# # 9. Pet Adoption Center
-# def add_pet(): pass
-# def find_by_species(): pass
-# def older_than(): pass
-#
-# # 10. Gym Membership System
-# def register_member(): pass
-# def change_plan(): pass
-# def unpaid_members(): pass
+def update_enrollment(course_title:str = "", new_enrollments:int = 0) -> None:
+    if course_title in courses:
+        courses[course_title]["Enrollments"] = new_enrollments
+        print(f"The new number of enrollments ({new_enrollments}) for the course '{course_title}' was successfully updated.")
+
+def filter_by_hours(hours:int = 0) -> list:
+    filtered:list = []
+    for course_title, course_info in courses.items():
+        if course_info["Hours"] >= hours:
+            filtered.append(course_title)
+    return filtered
+
+# 7. To-Do List Organizer
+
+todos:dict = {}
+
+def add_task(task_name:str = "", priority:str = "") -> None:
+    if task_name in todos:
+        print(f"The task '{task_name}' already exists.")
+    else:
+        todos[task_name] = {"Priority": priority, "Status": "pending"}
+        print(f"The task '{task_name}' with priority ({priority}) was successfully added.")
+
+def complete_task(task_name:str = "") -> None:
+    if task_name in todos:
+        todos[task_name]["Status"] = "completed"
+        print(f"The task '{task_name}' was successfully marked as completed.")
+    else:
+        print(f"The task '{task_name}' does not exist.")
+
+def filter_tasks(priority:str = "", status:str = "") -> list:
+    filtered:list = []
+    for task_name, task_info in todos.items():
+        if task_info["Priority"] == priority and task_info["Status"] == status:
+            filtered.append(task_name)
+    return filtered
+
+# 8. Digital Wallet
+
+wallet:dict = {}
+
+def add_expense(category:str = "", amount:float = 0) -> None:
+    if category in wallet:
+        print(f"The expense category '{category}' already exists.")
+    else:
+        wallet[category] = amount
+        print(f"The expense category '{category}' with amount ({amount}) was successfully added.")
+
+def total_spent() -> float:
+    total:float = 0.0
+    if wallet:
+        total = sum(wallet.values())
+    else:
+        print("The wallet is empty.")
+    return total
+
+def expense_percentages() -> dict:
+    percentages:dict = {}
+    total:float = total_spent()
+    for category, expense_amount in wallet.items():
+        percentages[category] = round(expense_amount / total * 100, 1)
+    return percentages
+
+# 9. Pet Adoption Center
+
+pets:dict = {}
+
+def add_pet(pet_name:str = "", species:str = "", age:int = 0) -> None:
+    if pet_name in pets:
+        print(f"The pet '{pet_name}' already exists.")
+    else:
+        pets[pet_name] = {"Species": species, "Age": age}
+        print(f"The pet '{pet_name}' with species ({species}) and age ({age}) was successfully added.")
+
+def find_by_species(species:str = "") -> list:
+    filtered:list = []
+    for pet_name, pet_info in pets.items():
+        if pet_info["Species"] == species:
+            filtered.append(pet_name)
+    return filtered
+
+def older_than(age:int = 0) -> list:
+    older:list = []
+    for pet_name, pet_info in pets.items():
+        if pet_info["Age"] > age:
+            older.append({"name": pet_name})
+    return older
+
+# 10. Gym Membership System
+
+members:dict = {}
+
+def register_member(member_name:str = "", plan:str = "", status:str = "") -> None:
+    if member_name in members:
+        print(f"The member '{member_name}' already exists.")
+    else:
+        members[member_name] = {"Plan": plan, "Status": status}
+        print(f"The member '{member_name}' with plan ({plan}) and status ({status}) was successfully added.")
+
+def change_plan(member_name:str = "", new_plan:str = "") -> None:
+    if member_name in members:
+        members[member_name]["Plan"] = new_plan
+        print(f"The new plan ({new_plan}) for the member '{member_name}' was successfully changed.")
+    else:
+        print(f"The member '{member_name}' does not exist.")
+
+def unpaid_members() -> list:
+    unpaid:list = []
+    for member_name, member_info in members.items():
+        if member_info["Status"] == "late":
+            unpaid.append(member_name)
+    return unpaid
