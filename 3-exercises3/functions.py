@@ -90,7 +90,8 @@ def add_box(type_of_box:str = "", available_quantity:int = 0) -> None:
 
 def update_quantity(type_of_box:str = "", new_quantity:int = 0) -> None:
     if type_of_box in warehouse:
-        warehouse[type_of_box] = new_quantity
+        quantity = warehouse[type_of_box] + new_quantity
+        warehouse[type_of_box] = quantity
         print(f"The new quantity ({new_quantity}) of the type of box '{type_of_box}' was successfully updated.")
     else:
         print(f"The type of box '{type_of_box}' does not exist.")
